@@ -1,0 +1,47 @@
+stages:
+  - build
+  - deploy
+
+Build_Dev:
+  stage: build
+  script:
+    - cp -rf ${ENV_DEV} .env
+    - docker-compose -f docker-compose-develop.yml build
+  only:
+    - deployment
+  tags:
+    - stage
+
+
+Deploy_Dev:
+  stage: deploy
+  script:
+    - docker-compose -f docker-compose-develop.yml stop
+    - docker-compose -f docker-compose-develop.yml rm -f
+    - docker-compose -f docker-compose-develop.yml up -d exchange-backend
+  only:
+    - deployment
+  tags:
+    - stage
+
+
+Build_Prod:
+  stage: build
+  script:
+    - cp -rf ${ENV_PROD} .env
+    - docker-compose -f docker-compose-prod.yml build
+  only:
+    - production
+  tags:
+    - prod
+
+Deploy_Prod:
+  stage: deploy
+  script:
+    - docker-compose -f docker-compose-prod.yml stop
+    - docker-compose -f docker-compose-prod.yml rm -f
+    - docker-compose -f docker-compose-prod.yml up -d exchange-backend
+  only:
+    - production
+  tags:
+    - prod

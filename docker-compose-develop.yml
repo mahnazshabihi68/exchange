@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  exchange-backend:
+    container_name: exchange-backend-stage
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - storage_log:/var/www/html/storage/logs
+      - ./storage:/var/www/html/public/storage
+      - var_log:/var/log
+    ports:
+      - '8080:80'
+      - '6000:6000'
+
+volumes:
+   storage_log:
+   var_log:

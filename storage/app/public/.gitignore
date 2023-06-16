@@ -1,0 +1,8 @@
+*
+!.gitignore
+!avatar.png
+!logo.png
+!favicon.png
+!auth_background.jpeg
+!symbols
+!symbols/*
